@@ -41,7 +41,6 @@ jobs:
           cd opencv-${OPENCV_VERSION} && mkdir build && cd build
           cmake \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 \
             -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
             -DBUILD_SHARED_LIBS=OFF \
             -DENABLE_CXX11=ON -DBUILD_TESTS=OFF \
