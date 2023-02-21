@@ -40,7 +40,8 @@ jobs:
           wget https://github.com/opencv/opencv_contrib/archive/${OPENCV_VERSION}.zip -Oopencv_contrib-${OPENCV_VERSION}.zip && unzip opencv_contrib-${OPENCV_VERSION}.zip
           cd opencv-${OPENCV_VERSION} && mkdir build && cd build
           cmake \
-            -DCMAKE_BUILD_TYPE=Release \
+            "-DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 \
             -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
             -DBUILD_SHARED_LIBS=OFF \
             -DENABLE_CXX11=ON -DBUILD_TESTS=OFF \
@@ -78,7 +79,7 @@ jobs:
             -DWITH_ADE=OFF \
             -DWITH_OPENEXR=OFF \
             -DOPENCV_ENABLE_NONFREE=ON \
-            -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/opencv_macos ..
+            -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/opencv_macos" ..
           make -j4
           make install
           cd ${GITHUB_WORKSPACE}
@@ -88,7 +89,7 @@ jobs:
         run: |
           pwd
           mkdir src/build && cd $_
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos ..
+          cmake "-DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos" ..
           make -j4
           ls 
           ls OpenCvSharpExtern
