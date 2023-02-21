@@ -41,6 +41,7 @@ jobs:
           cd opencv-${OPENCV_VERSION} && mkdir build && cd build
           cmake \
             -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 \
             -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
             -DBUILD_SHARED_LIBS=OFF \
             -DENABLE_CXX11=ON -DBUILD_TESTS=OFF \
@@ -79,7 +80,7 @@ jobs:
             -DWITH_OPENEXR=OFF \
             -DOPENCV_ENABLE_NONFREE=ON \
             -DCMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/opencv_macos ..
-          make -j2
+          make -j4
           make install
           cd ${GITHUB_WORKSPACE}
           ls
@@ -88,8 +89,8 @@ jobs:
         run: |
           pwd
           mkdir src/build && cd $_
-          cmake -DCMAKE_BUILD_TYPE=Release -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos ..
-          make -j2
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos ..
+          make -j4
           ls 
           ls OpenCvSharpExtern
           cp OpenCvSharpExtern/libOpenCvSharpExtern.dylib ${GITHUB_WORKSPACE}/nuget/
@@ -114,13 +115,12 @@ jobs:
         run: |
           yyyymmdd=`date '+%Y%m%d'`
           echo $yyyymmdd
-          sed -E -i=.bak "s/<version>[0-9]\.[0-9]{1,2}\.[0-9]{1,2}.[0-9]{8}(-beta[0-9]*)?<\/version>/<version>${OPENCV_VERSION}.${yyyymmdd}${BETA}<\/version>/" ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-x64.nuspec
-          cat ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-x64.nuspec
-          dotnet pack ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-x64.csproj -o ${GITHUB_WORKSPACE}/artifacts_macos
+          sed -E -i=.bak "s/<version>[0-9]\.[0-9]{1,2}\.[0-9]{1,2}.[0-9]{8}(-beta[0-9]*)?<\/version>/<version>${OPENCV_VERSION}.${yyyymmdd}${BETA}<\/version>/" ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-universal.nuspec
+          cat ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-universal.nuspec
+          dotnet pack ${GITHUB_WORKSPACE}/nuget/OpenCvSharp4.runtime.osx.10.15-universal.csproj -o ${GITHUB_WORKSPACE}/artifacts_macos
           ls ${GITHUB_WORKSPACE}/artifacts_macos       
        
       - uses: actions/upload-artifact@v3
         with:
           name: artifacts_macos_10
           path: artifacts_macos
-          
