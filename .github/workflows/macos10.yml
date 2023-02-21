@@ -40,7 +40,6 @@ jobs:
           wget https://github.com/opencv/opencv_contrib/archive/${OPENCV_VERSION}.zip -Oopencv_contrib-${OPENCV_VERSION}.zip && unzip opencv_contrib-${OPENCV_VERSION}.zip
           cd opencv-${OPENCV_VERSION} && mkdir build && cd build
           cmake \
-            -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
             -DCMAKE_BUILD_TYPE=Release \
             -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${OPENCV_VERSION}/modules \
             -DBUILD_SHARED_LIBS=OFF \
