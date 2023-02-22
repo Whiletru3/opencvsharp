@@ -21,9 +21,13 @@ jobs:
         with:
           fetch-depth: 1
       
-      - name: Install build dependencies
+      - name: Install build dependencies (x64)
         run: | 
           brew install wget pkg-config mono-libgdiplus gtk+ ffmpeg@4 glog yasm harfbuzz jpeg libpng libtiff openjpeg metis openblas opencore-amr protobuf tbb webp # openexr
+
+      - name: Install build dependencies (arm64)
+        run: |
+          arch -arm64 /opt/homebrew/bin/brew install wget pkg-config mono-libgdiplus gtk+ ffmpeg@4 glog yasm harfbuzz jpeg libpng libtiff openjpeg metis openblas opencore-amr protobuf tbb webp # openexr
 
 #      - name: Cache OpenCV
 #        id: opencv-cache
