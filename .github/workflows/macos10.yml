@@ -40,6 +40,8 @@ jobs:
           wget https://github.com/opencv/opencv_contrib/archive/${OPENCV_VERSION}.zip -Oopencv_contrib-${OPENCV_VERSION}.zip && unzip opencv_contrib-${OPENCV_VERSION}.zip
           cd opencv-${OPENCV_VERSION} && mkdir build && cd build
           cmake \
+            -DCMAKE_SYSTEM_PROCESSOR=arm64 \
+            -DWITH_OPENJPEG=OFF \
             -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
             -DWITH_IPP=OFF \
             -DCMAKE_BUILD_TYPE=Release \
@@ -90,7 +92,7 @@ jobs:
         run: |
           pwd
           mkdir src/build && cd $_
-          cmake -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_BUILD_TYPE=Release -DWITH_IPP=OFF -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos ..
+          cmake -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" -DCMAKE_SYSTEM_PROCESSOR=arm64 -DWITH_OPENJPEG=OFF -DCMAKE_BUILD_TYPE=Release -DWITH_IPP=OFF -D CMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/opencv_macos ..
           make -j3
           ls 
           ls OpenCvSharpExtern
