@@ -107,7 +107,7 @@ jobs:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathToPublish: '$(Agent.BuildDirectory)/artifacts_macos'
+      pathToPublish: '$(Build.SourcesDirectory)/artifacts_macos'
       artifactName: 'Binaries'
     condition: succeeded()
 
