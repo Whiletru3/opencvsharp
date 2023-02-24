@@ -16,7 +16,7 @@ jobs:
     name: 'AvaloniaMacPool'
 
   steps:
-  - script: brew install wget pkg-config mono-libgdiplus gtk+ ffmpeg@4 glog yasm harfbuzz jpeg libpng libtiff openjpeg metis openblas opencore-amr protobuf tbb webp openexr
+  - script: arch -arm64 brew install wget pkg-config mono-libgdiplus gtk+ ffmpeg@4 glog yasm harfbuzz jpeg libpng libtiff openjpeg metis openblas opencore-amr protobuf tbb webp openexr
     displayName: install build dependencies
 
   - script: |
