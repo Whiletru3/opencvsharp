@@ -7,7 +7,7 @@ trigger:
 - master
 
 jobs:
-- job: Mac ARM64
+- job: OsxArm64
   pool:
     name: 'AvaloniaMacPool'
 
