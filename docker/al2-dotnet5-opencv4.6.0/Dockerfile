@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/dotnet:5.0
 
-ENV OPENCV_VERSION=4.5.3
+ENV OPENCV_VERSION=4.6.0
 
 WORKDIR /
 
@@ -38,7 +38,7 @@ RUN cd opencv && mkdir build && cd build && \
     -D BUILD_opencv_python_bindings_generator=OFF \
     -D BUILD_opencv_python_tests=OFF \
     -D BUILD_opencv_ts=OFF \
-    -D BUILD_opencv_js=OFF \ 
+    -D BUILD_opencv_js=OFF \
     -D BUILD_opencv_bioinspired=OFF \
     -D BUILD_opencv_ccalib=OFF \
     -D BUILD_opencv_datasets=OFF \
@@ -55,16 +55,16 @@ RUN cd opencv && mkdir build && cd build && \
     -D BUILD_opencv_structured_light=OFF \
     -D BUILD_opencv_surface_matching=OFF \
     -D BUILD_opencv_videostab=OFF \
-    -D BUILD_opencv_wechat_qrcode=OFF \
+    -D BUILD_opencv_wechat_qrcode=ON \
     -D WITH_GSTREAMER=OFF \
     -D OPENCV_ENABLE_NONFREE=ON \
-    .. && make -j8 && make install
+    .. && make -j$(nproc) && make install
 
 # Download OpenCvSharp
 RUN wget https://github.com/shimat/opencvsharp/archive/master.zip && \
     unzip master.zip && rm master.zip && \
     mv opencvsharp-master opencvsharp && \
-    cd opencvsharp 
+    cd opencvsharp
 
 # Install the Extern lib.
 RUN mkdir /opencvsharp/make && cd /opencvsharp/make && \
